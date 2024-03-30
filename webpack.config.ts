@@ -29,7 +29,7 @@ export default (env: EnvVariables) => {
             new VueLoaderPlugin(),
             isDev && new ProgressPlugin(),
             new DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+                //'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
                 // ...
               }),
         ],
@@ -45,10 +45,18 @@ export default (env: EnvVariables) => {
                     use: 'vue-loader',
                 },
                 {
-                    test: /\.css?$/,
+                    test: /\.s[ac]ss$/i,
                     use: [
                         'vue-style-loader',
-                        'css-loader'
+                        'css-loader',
+                        "sass-loader",
+                    ]
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                      'vue-style-loader',
+                      'css-loader',
                     ]
                 }
             ]
