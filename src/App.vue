@@ -10,7 +10,7 @@ export default {
     name: 'app',
     data(){
         return {
-            text: 'Vue component in VPS ',
+            text: 'new Vue component in VPS ',
             env: process.env.NODE_ENV
         }
     }
