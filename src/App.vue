@@ -10,7 +10,7 @@ export default {
     name: 'app',
     data(){
         return {
-            text: 'Vue component',
+            text: 'Vue component test',
             env: process.env.NODE_ENV
         }
     }
