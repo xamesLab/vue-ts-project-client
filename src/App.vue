@@ -1,5 +1,5 @@
 <template>
-    <h1 class="main-title">Title</h1>
+    <h1 class="main-title">Test deploy</h1>
     <div class="vue-component">{{ text }}</div>
     <div class="">env: {{ env }}</div>
 </template>
@@ -10,7 +10,7 @@ export default {
     name: 'app',
     data(){
         return {
-            text: 'Vue component test',
+            text: 'Vue component in VPS ',
             env: process.env.NODE_ENV
         }
     }
