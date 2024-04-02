@@ -6,11 +6,34 @@ on:
       - master
 
 jobs:
-  build:
-    name: Build and deploy
+  check-build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
     steps:
-      - run: mkdir -p ~/.ssh/
-      - run: echo "${{ secrets.STAGING_SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
-      - run: chmod 600 ~/.ssh/private.key
-      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" root@af8a7307a82e.vps.myjino.ru -p 49215 whoami
+      - uses: actions/checkout@v4
+      - name: Staring Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+      - run: npm install --package-lock-only
+      - run: npm ci
+      - run: npm run build:prod
+  deploy:
+    needs: check-build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: staging
+      cancel-in-progress: true
+    steps:
+      - name: SSH Command
+        uses: D3rHase/ssh-command-action@v0.2.2
+        with:
+          # hostname / IP of the server
+          host: ${{ secrets.STAGING_SSH_HOST }}
+          user: ${{ secrets.STAGING_SSH_USERNAME }}
+          port: 49215
+          private_key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          host_fingerprint: ${{ secrets.STAGING_SSH_FINGERPRINT }}
+          command: source ~/.nvm/nvm.sh; echo 'Hello'
