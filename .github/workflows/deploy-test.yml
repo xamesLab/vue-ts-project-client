@@ -32,7 +32,7 @@ jobs:
         with:
           # hostname / IP of the server
           host: af8a7307a82e.vps.myjino.ru
-          user: user
+          user: root
           private_key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           host_fingerprint: ${{ secrets.STAGING_SSH_FINGERPRINT }}
           command: source ~/.nvm/nvm.sh; echo 'Hello'
