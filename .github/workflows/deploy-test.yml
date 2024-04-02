@@ -23,9 +23,5 @@ jobs:
   deploy:
     needs: check-build
     runs-on: ubuntu-latest
-    concurrency:
-      group: staging
-      cancel-in-progress: true
     steps:
-      - name: SSH Command
       - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" root@af8a7307a82e.vps.myjino.ru -p 49215 whoami
