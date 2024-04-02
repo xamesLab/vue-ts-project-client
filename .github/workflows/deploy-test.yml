@@ -11,6 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: mkdir -p ~/.ssh/
-      - run: echo "{{ secrets.STAGING_SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
+      - run: echo "${{ secrets.STAGING_SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
       - run: chmod 600 ~/.ssh/private.key
       - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" ${{ secrets.STAGING_SSH_USERNAME }}@${{ secrets.STAGING_SSH_HOST }} -p 22 whoami
