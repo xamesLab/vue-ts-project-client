@@ -13,4 +13,4 @@ jobs:
       - run: mkdir -p ~/.ssh/
       - run: echo "${{ secrets.STAGING_SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
       - run: chmod 600 ~/.ssh/private.key
-      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" root@af8a7307a82e -p 22 whoami
+      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" af8a7307a82e.vps.myjino.ru -p 22 whoami
