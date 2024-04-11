@@ -62,7 +62,14 @@ export default (env: EnvVariables) => {
             ]
         },
         resolve: {
-            extensions: ['.ts', '.js']
+            extensions: ['.ts', '.js'],
+            fallback: {
+                net: false,
+                assert: false,
+                url: false,
+                crypto: false,
+                tls: false,
+            }
         },
         devServer: isDev ? {
             port: env.port ?? 5000,
