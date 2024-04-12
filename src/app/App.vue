@@ -7,7 +7,7 @@
             <br>
             <h4>Pair: {{ pairList[0] }}</h4>
             <br>
-            <div v-for="p in pairData[pairList[0]]" :key="p.close">{{ p.close }}</div>
+            <ChartItem />
         </div>
     </v-theme-provider>
 </template>
@@ -15,8 +15,13 @@
 import "./style.scss";
 import {useUserStore} from '../shared/stores/userStore'
 import {useCandleModel} from '../entities/binanceService/model'
+import { ChartItem } from '../entities/chart/index'
+
 export default {
     name: 'app',
+    components: {
+        ChartItem
+    },
     data(){
         return {
             text: 'new Vue component in VPS ',
