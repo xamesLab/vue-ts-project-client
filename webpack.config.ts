@@ -18,7 +18,7 @@ export default (env: EnvVariables) => {
     const isDev = env.mode === 'development'
     const config: Configuration = {
         mode: env.mode ?? 'development',
-        entry: path.resolve(__dirname, 'src', 'main.ts'),
+        entry: path.resolve(__dirname, 'src/app', 'main.ts'),
         output: {
             path: path.resolve(__dirname, 'build'),
             filename: 'bandle.[contenthash].js',
@@ -62,7 +62,14 @@ export default (env: EnvVariables) => {
             ]
         },
         resolve: {
-            extensions: ['.ts', '.js']
+            extensions: ['.ts', '.js'],
+            fallback: {
+                net: false,
+                assert: false,
+                url: false,
+                crypto: false,
+                tls: false,
+            }
         },
         devServer: isDev ? {
             port: env.port ?? 5000,

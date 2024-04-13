@@ -30,8 +30,12 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.9.1",
+    "binance-api-node": "^0.12.7",
     "dotenv": "^16.4.5",
+    "pinia": "^2.1.7",
     "vue": "^3.4.21",
-    "vue-template-compiler": "^2.7.16"
+    "vue-template-compiler": "^2.7.16",
+    "vuetify": "^3.5.14"
   }
 }

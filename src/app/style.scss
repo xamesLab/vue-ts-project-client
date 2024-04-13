@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.vue-component {
+  color: #777;
+  padding: 2rem 1rem;
+}
+
+.main-title {
+    color: blueviolet;
+}
+
+.button {
+  color: #777;
+}
+
+.dark-theme {
+  background-color: #777;
+
+  * {
+    color: #e2e2e2;
+  }
+  
+  .main-title {
+      color: rgb(229, 201, 255);
+  }
+
+  .button {
+    color: #e2e2e2;
+    background-color: #777;
+    padding: 0.5rem 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+  }
+}
