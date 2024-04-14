@@ -79,6 +79,15 @@ export default {
             tooltip: am5.Tooltip.new(root, {})
         }));
 
+        // add range which will show current value
+        var currentValueDataItem = valueAxis.createAxisRange(valueAxis.makeDataItem({ value: 0 }));
+        let currentLabel = currentValueDataItem.get("label");
+        if (currentLabel) {
+        currentLabel.setAll({
+            fill: am5.color(0xffffff),
+            background: am5.Rectangle.new(root, { fill: am5.color(0x000000) })
+        })
+        }
         // Add series
         // -------------------------------------------------------------------------------
         let valueSeries = mainPanel.series.push(am5xy.CandlestickSeries.new(root, {
@@ -242,6 +251,76 @@ export default {
         valueSeries.data.setAll(data2);
         volumeSeries.data.setAll(data2);
         sbSeries.data.setAll(data2);
+
+        // update data
+        var previousDate;
+
+        setInterval(function () {
+        var valueSeries = stockChart.get("stockSeries");
+        var date = Date.now();
+        var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
+        if (lastDataObject) {
+            var previousDate = lastDataObject.Date;
+            var previousValue = lastDataObject.Close;
+
+            let value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
+
+            var high = lastDataObject.High;
+            var low = lastDataObject.Low;
+            var open = lastDataObject.Open;
+
+            if (am5.time.checkChange(date, previousDate, "minute")) {
+            open = value;
+            high = value;
+            low = value;
+
+            var dObj1 = {
+                Date: date,
+                Close: value,
+                Open: value,
+                Low: value,
+                High: value
+            };
+
+            valueSeries.data.push(dObj1);
+            sbSeries.data.push(dObj1);
+            previousDate = date;
+            } else {
+            if (value > high) {
+                high = value;
+            }
+
+            if (value < low) {
+                low = value;
+            }
+
+            var dObj2 = {
+                Date: date,
+                Close: value,
+                Open: open,
+                Low: low,
+                High: high
+            };
+
+            valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
+            sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
+            }
+            // update current value
+            if (currentLabel) {
+            currentValueDataItem.animate({ key: "value", to: value, duration: 500, easing: am5.ease.out(am5.ease.cubic) });
+            currentLabel.set("text", stockChart.getNumberFormatter().format(value));
+            var bg = currentLabel.get("background");
+            if (bg) {
+                if (value < open) {
+                bg.set("fill", root.interfaceColors.get("negative"));
+                }
+                else {
+                bg.set("fill", root.interfaceColors.get("positive"));
+                }
+            }
+            }
+        }
+        }, 1000);
     }
 }
 </script>

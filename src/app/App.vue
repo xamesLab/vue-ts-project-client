@@ -8,6 +8,7 @@
             <h4>Pair: {{ pairList[0] }}</h4>
             <br>
             <ChartItem />
+            <button @click="wsStop">stop</button>
         </div>
     </v-theme-provider>
 </template>
@@ -15,6 +16,7 @@
 import "./style.scss";
 import {useUserStore} from '../shared/stores/userStore'
 import {useCandleModel} from '../entities/binanceService/model'
+import {binanceWs} from '../entities/binanceService/api'
 import { ChartItem } from '../entities/chart/index'
 
 export default {
@@ -26,6 +28,7 @@ export default {
         return {
             text: 'new Vue component in VPS ',
             env: process.env.NODE_ENV,
+            ws: null,
         }
     },
     computed: {
@@ -37,12 +40,19 @@ export default {
         },
     },
     methods: {
+        wsStop() {
+            console.log('stop')
+            this.ws()
+        }
     },
     created() {
 
     },
     mounted() {
-        useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
+        //useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
+        this.ws = binanceWs.futuresDepth('ETHBTC', depth => {
+            console.log(depth)
+        })
         
     }
 }
