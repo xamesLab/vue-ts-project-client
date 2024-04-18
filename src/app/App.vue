@@ -7,7 +7,7 @@
             <br>
             <h4>Pair: {{ wsData.close }}</h4>
             <br>
-            <ChartItem :ws="wsData" />
+            <ChartsGrid />
             <button @click="wsStop">stop</button>
         </div>
     </v-theme-provider>
@@ -17,12 +17,12 @@ import "./style.scss";
 import {useUserStore} from '../shared/stores/userStore'
 import {useCandleModel} from '../entities/binanceService/model'
 import {binanceWs} from '../entities/binanceService/api'
-import { ChartItem } from '../entities/chart/index'
+import { ChartsGrid } from '../widgets/charts-grid/index'
 
 export default {
     name: 'app',
     components: {
-        ChartItem
+        ChartsGrid
     },
     data(){
         return {
@@ -52,7 +52,7 @@ export default {
     mounted() {
         //useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
         this.ws = binanceWs.futuresCandles('ADAUSDT', '15m', candle => {
-            this.wsData.close = candle.close
+            //this.wsData.close = candle.close
         })
         
     }
