@@ -5,9 +5,9 @@
             <div class="">env: {{ env }}</div>
             <hr>
             <br>
-            <h4>Pair: {{ pairList[0] }}</h4>
+            <h4>Pair: {{ wsData.close }}</h4>
             <br>
-            <ChartItem />
+            <ChartItem :ws="wsData" />
             <button @click="wsStop">stop</button>
         </div>
     </v-theme-provider>
@@ -29,6 +29,7 @@ export default {
             text: 'new Vue component in VPS ',
             env: process.env.NODE_ENV,
             ws: null,
+            wsData: {close: 0}
         }
     },
     computed: {
@@ -50,8 +51,8 @@ export default {
     },
     mounted() {
         //useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
-        this.ws = binanceWs.futuresDepth('ETHBTC', depth => {
-            console.log(depth)
+        this.ws = binanceWs.futuresCandles('ADAUSDT', '15m', candle => {
+            this.wsData.close = candle.close
         })
         
     }

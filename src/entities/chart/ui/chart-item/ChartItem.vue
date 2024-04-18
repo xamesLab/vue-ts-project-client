@@ -7,13 +7,27 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import * as am5stock from "@amcharts/amcharts5/stock";
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import {shallowRef} from 'vue'
 
 import { testData } from '../../../../shared/config/testChartData'
+
+const state = shallowRef({ count: 350 })
 
 export default {
     name: 'ChartItem',
     data(){
         return {
+        }
+    },
+    props: {
+        ws: Object,
+    },
+    watch: {
+        'ws.close': {
+            handler(close) {
+                state.value = { count: Number(close) + 350 }
+            },
+            deep: true
         }
     },
     computed: {
@@ -46,7 +60,7 @@ export default {
 
         // Set global number format
         // -------------------------------------------------------------------------------
-        root.numberFormatter.set("numberFormat", "#,###.00");
+        root.numberFormatter.set("numberFormat", "#,###.0000");
 
         // Create a main stock panel (chart)
         // -------------------------------------------------------------------------------
@@ -255,7 +269,7 @@ export default {
         // update data
         var previousDate;
 
-        setInterval(function () {
+        setInterval(() => {
         var valueSeries = stockChart.get("stockSeries");
         var date = Date.now();
         var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
@@ -263,7 +277,7 @@ export default {
             var previousDate = lastDataObject.Date;
             var previousValue = lastDataObject.Close;
 
-            let value = am5.math.round(previousValue + (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2, 2);
+            let value = state.value.count;
 
             var high = lastDataObject.High;
             var low = lastDataObject.Low;
