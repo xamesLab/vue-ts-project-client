@@ -1,10 +1,12 @@
-import { CandleChartInterval_LT, CandleChartResult, Binance } from "binance-api-node";
-import { binanceClient } from "../../../shared/binance-client";
+import { CandleChartInterval_LT, CandleChartResult, Binance } from "binance-api-node"
+import binance from "../../../shared/binance-client"
+
+const { binanceClient } = binance
 
 export interface ICandleProp {
     symbol: string;
     interval: CandleChartInterval_LT;
-    limit?: number
+    limit?: number;
 }
 
 class BinanceCandles {

@@ -5,9 +5,10 @@
             <div class="">env: {{ env }}</div>
             <hr>
             <br>
-            <h4>Pair: {{ pairList[0] }}</h4>
+            <h4>Pair: {{ wsData.close }}</h4>
             <br>
-            <ChartItem />
+            <ChartItem :ws="wsData" />
+            <button @click="wsStop">stop</button>
         </div>
     </v-theme-provider>
 </template>
@@ -15,6 +16,7 @@
 import "./style.scss";
 import {useUserStore} from '../shared/stores/userStore'
 import {useCandleModel} from '../entities/binanceService/model'
+import {binanceWs} from '../entities/binanceService/api'
 import { ChartItem } from '../entities/chart/index'
 
 export default {
@@ -26,6 +28,8 @@ export default {
         return {
             text: 'new Vue component in VPS ',
             env: process.env.NODE_ENV,
+            ws: null,
+            wsData: {close: 0}
         }
     },
     computed: {
@@ -37,12 +41,19 @@ export default {
         },
     },
     methods: {
+        wsStop() {
+            console.log('stop')
+            this.ws()
+        }
     },
     created() {
 
     },
     mounted() {
-        useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
+        //useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
+        this.ws = binanceWs.futuresCandles('ADAUSDT', '15m', candle => {
+            this.wsData.close = candle.close
+        })
         
     }
 }
