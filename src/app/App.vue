@@ -14,9 +14,9 @@
 </template>
 <script>
 import "./style.scss";
-import {useUserStore} from '../shared/stores/userStore'
-import {useCandleModel} from '../entities/binanceService/model'
-import {binanceWs} from '../entities/binanceService/api'
+import {useUserStore} from '@shared/stores/userStore'
+import {useCandleModel} from '@entities/binanceService/model'
+import {binanceWs} from '@entities/binanceService/api'
 import { ChartsGrid } from '../widgets/charts-grid/index'
 
 export default {

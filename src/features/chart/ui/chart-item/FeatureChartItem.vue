@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import { ChartItem } from '../../../../entities/chart/index'
+import { ChartItem } from '@entities/chart/index'
 
 export default {
     name: 'FeatureChartItem',

@@ -7,7 +7,7 @@
     </section>
 </template>
 <script>
-import { FeatureChartItem } from '../../../features/chart/index'
+import { FeatureChartItem } from '@features/chart/index'
 
 export default {
     name: 'ChartsGrid',

@@ -9,7 +9,7 @@ import * as am5stock from "@amcharts/amcharts5/stock";
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {shallowRef} from 'vue'
 
-import { testData } from '../../../../shared/config/testChartData'
+import { testData } from '@shared/config/testChartData'
 
 const state = shallowRef({ count: 350 })
 

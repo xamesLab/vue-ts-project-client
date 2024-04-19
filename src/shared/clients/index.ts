@@ -7,6 +7,6 @@ const binanceClientAuth = Binance({
     //   getTime: 'xxx',
     })
 
-export default {
+export const clients = {
     binanceClient: Binance(),
 }
