@@ -1,5 +1,5 @@
-import binance from "../../../shared/binance-client"
+import { clients } from "../../../shared/clients"
 
-const { binanceClient } = binance
+const { binanceClient } = clients
 
 export const binanceWs = binanceClient.ws

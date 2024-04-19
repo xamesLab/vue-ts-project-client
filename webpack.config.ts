@@ -69,6 +69,11 @@ export default (env: EnvVariables) => {
                 url: false,
                 crypto: false,
                 tls: false,
+            },
+            alias: { 
+                '@entities': path.resolve(__dirname, './src/entities'),
+                '@features': path.resolve(__dirname, './src/features'),
+                '@shared': path.resolve(__dirname, './src/shared'),
             }
         },
         devServer: isDev ? {

@@ -1,7 +1,7 @@
 import { CandleChartInterval_LT, CandleChartResult, Binance } from "binance-api-node"
-import binance from "../../../shared/binance-client"
+import { clients } from "../../../shared/clients"
 
-const { binanceClient } = binance
+const { binanceClient } = clients
 
 export interface ICandleProp {
     symbol: string;

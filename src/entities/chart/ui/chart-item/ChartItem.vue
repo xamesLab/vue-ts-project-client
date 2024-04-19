@@ -1,5 +1,5 @@
 <template>
-    <div id="chartcontrols"></div>
+    <div :id="containerClass"></div>
     <div class="hello" ref="chartdiv"></div>
 </template>
 <script>
@@ -9,7 +9,7 @@ import * as am5stock from "@amcharts/amcharts5/stock";
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import {shallowRef} from 'vue'
 
-import { testData } from '../../../../shared/config/testChartData'
+import { testData } from '@shared/config/testChartData'
 
 const state = shallowRef({ count: 350 })
 
@@ -20,6 +20,10 @@ export default {
         }
     },
     props: {
+        chartKey: {
+            chartKey: Number,
+            required: true
+        },
         ws: Object,
     },
     watch: {
@@ -31,6 +35,9 @@ export default {
         }
     },
     computed: {
+        containerClass() {
+            return `${this.chartKey}-container`
+        }
     },
     methods: {
     },
@@ -233,7 +240,7 @@ export default {
         // Stock toolbar
         // -------------------------------------------------------------------------------
         let toolbar = am5stock.StockToolbar.new(root, {
-            container: document.getElementById("chartcontrols"),
+            container: document.getElementById(this.containerClass),
             stockChart: stockChart,
             controls: [
                 am5stock.IndicatorControl.new(root, {
@@ -269,72 +276,72 @@ export default {
         // update data
         var previousDate;
 
-        setInterval(() => {
-        var valueSeries = stockChart.get("stockSeries");
-        var date = Date.now();
-        var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
-        if (lastDataObject) {
-            var previousDate = lastDataObject.Date;
-            var previousValue = lastDataObject.Close;
+        // setInterval(() => {
+        // var valueSeries = stockChart.get("stockSeries");
+        // var date = Date.now();
+        // var lastDataObject = valueSeries.data.getIndex(valueSeries.data.length - 1);
+        // if (lastDataObject) {
+        //     var previousDate = lastDataObject.Date;
+        //     var previousValue = lastDataObject.Close;
 
-            let value = state.value.count;
+        //     let value = state.value.count;
 
-            var high = lastDataObject.High;
-            var low = lastDataObject.Low;
-            var open = lastDataObject.Open;
+        //     var high = lastDataObject.High;
+        //     var low = lastDataObject.Low;
+        //     var open = lastDataObject.Open;
 
-            if (am5.time.checkChange(date, previousDate, "minute")) {
-            open = value;
-            high = value;
-            low = value;
+        //     if (am5.time.checkChange(date, previousDate, "minute")) {
+        //     open = value;
+        //     high = value;
+        //     low = value;
 
-            var dObj1 = {
-                Date: date,
-                Close: value,
-                Open: value,
-                Low: value,
-                High: value
-            };
+        //     var dObj1 = {
+        //         Date: date,
+        //         Close: value,
+        //         Open: value,
+        //         Low: value,
+        //         High: value
+        //     };
 
-            valueSeries.data.push(dObj1);
-            sbSeries.data.push(dObj1);
-            previousDate = date;
-            } else {
-            if (value > high) {
-                high = value;
-            }
+        //     valueSeries.data.push(dObj1);
+        //     sbSeries.data.push(dObj1);
+        //     previousDate = date;
+        //     } else {
+        //     if (value > high) {
+        //         high = value;
+        //     }
 
-            if (value < low) {
-                low = value;
-            }
+        //     if (value < low) {
+        //         low = value;
+        //     }
 
-            var dObj2 = {
-                Date: date,
-                Close: value,
-                Open: open,
-                Low: low,
-                High: high
-            };
+        //     var dObj2 = {
+        //         Date: date,
+        //         Close: value,
+        //         Open: open,
+        //         Low: low,
+        //         High: high
+        //     };
 
-            valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
-            sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
-            }
-            // update current value
-            if (currentLabel) {
-            currentValueDataItem.animate({ key: "value", to: value, duration: 500, easing: am5.ease.out(am5.ease.cubic) });
-            currentLabel.set("text", stockChart.getNumberFormatter().format(value));
-            var bg = currentLabel.get("background");
-            if (bg) {
-                if (value < open) {
-                bg.set("fill", root.interfaceColors.get("negative"));
-                }
-                else {
-                bg.set("fill", root.interfaceColors.get("positive"));
-                }
-            }
-            }
-        }
-        }, 1000);
+        //     valueSeries.data.setIndex(valueSeries.data.length - 1, dObj2);
+        //     sbSeries.data.setIndex(sbSeries.data.length - 1, dObj2);
+        //     }
+        //     // update current value
+        //     if (currentLabel) {
+        //     currentValueDataItem.animate({ key: "value", to: value, duration: 500, easing: am5.ease.out(am5.ease.cubic) });
+        //     currentLabel.set("text", stockChart.getNumberFormatter().format(value));
+        //     var bg = currentLabel.get("background");
+        //     if (bg) {
+        //         if (value < open) {
+        //         bg.set("fill", root.interfaceColors.get("negative"));
+        //         }
+        //         else {
+        //         bg.set("fill", root.interfaceColors.get("positive"));
+        //         }
+        //     }
+        //     }
+        // }
+        // }, 1000);
     }
 }
 </script>
