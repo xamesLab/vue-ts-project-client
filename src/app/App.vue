@@ -14,9 +14,7 @@
 </template>
 <script>
 import "./style.scss";
-import {useUserStore} from '@shared/stores/userStore'
 import {useCandleModel} from '@entities/binanceService/model'
-import {binanceWs} from '@entities/binanceService/api'
 import { ChartsGrid } from '../widgets/charts-grid/index'
 
 export default {
@@ -50,11 +48,9 @@ export default {
 
     },
     mounted() {
-        //useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
-        this.ws = binanceWs.futuresCandles('ADAUSDT', '15m', candle => {
-            //this.wsData.close = candle.close
+        window.addEventListener('custom-event', () => {
+            console.log('custom-event0')
         })
-        
     }
 }
 </script>

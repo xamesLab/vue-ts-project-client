@@ -15,7 +15,12 @@ export const useCandleModel = defineStore({
     actions: {
         async fetchCandles(payload: ICandleProp): Promise<void> {
             const response = await binanceCandles.fetchCandles(payload)
-            this.candleList = {[payload.symbol]: response}
+            
+            const formatResponse = response.map(i => {
+                return {...i, close: Number(i.close), open: Number(i.open), low: Number(i.low), high: Number(i.close), volume: Number(i.volume)}
+            })
+
+            this.candleList = {[payload.symbol]: formatResponse}
         }
     },
 
