@@ -17,7 +17,6 @@ Thumbs.db
 www
 .sass-cache/*
 dist
-build
 .node-version
 .yarn
 .pnp.loader.mjs

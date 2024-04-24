@@ -5,27 +5,29 @@
             <div class="">env: {{ env }}</div>
             <hr>
             <br>
-            <h4>Pair: {{ pairList[0] }}</h4>
+            <h4>Pair: {{ wsData.close }}</h4>
             <br>
-            <ChartItem />
+            <ChartsGrid />
+            <button @click="wsStop">stop</button>
         </div>
     </v-theme-provider>
 </template>
 <script>
 import "./style.scss";
-import {useUserStore} from '../shared/stores/userStore'
-import {useCandleModel} from '../entities/binanceService/model'
-import { ChartItem } from '../entities/chart/index'
+import {useCandleModel} from '@entities/binanceService/model'
+import { ChartsGrid } from '../widgets/charts-grid/index'
 
 export default {
     name: 'app',
     components: {
-        ChartItem
+        ChartsGrid
     },
     data(){
         return {
             text: 'new Vue component in VPS ',
             env: process.env.NODE_ENV,
+            ws: null,
+            wsData: {close: 0}
         }
     },
     computed: {
@@ -37,13 +39,18 @@ export default {
         },
     },
     methods: {
+        wsStop() {
+            console.log('stop')
+            this.ws()
+        }
     },
     created() {
 
     },
     mounted() {
-        useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
-        
+        window.addEventListener('custom-event', () => {
+            console.log('custom-event0')
+        })
     }
 }
 </script>
