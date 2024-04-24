@@ -27,4 +27,4 @@ jobs:
       - run: mkdir -p ~/.ssh/
       - run: echo "${{ secrets.STAGING_SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
       - run: chmod 600 ~/.ssh/private.key
-      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" root@af8a7307a82e.vps.myjino.ru -p 49215 'whoami; cd /home/admin/vue-ts-project-client; pwd'
+      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" root@af8a7307a82e.vps.myjino.ru -p 49215 'whoami; bash -s < /home/admin/anyscript.sh'
