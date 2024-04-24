@@ -1,6 +1,6 @@
 <template>
     <section class="charts-grid">
-        <FeatureChartItem :chartKey="1" />
+        <FeatureChartItem :wsData="wsData" :chartKey="1" />
         <FeatureChartItem :chartKey="2" />
         <FeatureChartItem :chartKey="3" />
         <FeatureChartItem :chartKey="4" />
@@ -8,6 +8,7 @@
 </template>
 <script>
 import { FeatureChartItem } from '@features/chart/index'
+import { binanceWs } from '@entities/binanceService/api'
 
 export default {
     name: 'ChartsGrid',
@@ -16,8 +17,16 @@ export default {
     },
     data(){
         return {
+            ws: null,
+            wsData: {close: 0}
         }
     },
+    mounted() {
+        //useCandleModel().fetchCandles({symbol: 'WAVESUSDT', interval: '15m', limit: 10})
+        this.ws = binanceWs.futuresCandles('BNBUSDT', '15m', candle => {
+            //this.wsData.close = candle.close
+        })
+    }
 }
 </script>
 <style lang="scss" scoped>

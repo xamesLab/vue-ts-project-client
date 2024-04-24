@@ -1,6 +1,6 @@
 <template>
     <div class="chart-item">
-        <ChartItem :ws="{}" :chartKey="chartKey" />
+        <ChartItem :wsData="wsData" :chartKey="chartKey"  />
     </div>
 </template>
 <script>
@@ -10,6 +10,7 @@ export default {
     name: 'FeatureChartItem',
     props: {
         chartKey: Number,
+        wsData: Object
     },
     components: {
         ChartItem
@@ -18,6 +19,8 @@ export default {
         return {
         }
     },
+    methods: {
+    }
 }
 </script>
 <style lang="scss" scoped>
